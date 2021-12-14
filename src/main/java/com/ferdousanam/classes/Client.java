@@ -20,7 +20,7 @@ public class Client extends NetworkConnection {
     }
 
     @Override
-    protected String getIP() {
+    public String getIP() {
         return ip;
     }
 

@@ -17,7 +17,7 @@ public class Server extends NetworkConnection {
     }
 
     @Override
-    protected String getIP() {
+    public String getIP() {
         return null;
     }
 

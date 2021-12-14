@@ -12,8 +12,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ChatController implements Initializable {
-    public static final boolean isServer = true;
-    public static final String serverIp = "127.0.0.1";
+    public static final boolean isServer = false;
     private NetworkConnection connection;
 
     @FXML
@@ -22,13 +21,22 @@ public class ChatController implements Initializable {
     @FXML
     private TextField input;
 
+    @FXML
+    private TextField serverIp;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        connection = isServer ? createServer() : createClient();
-        try {
-            connection.startConnection();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (isServer) {
+            serverIp.setManaged(false);
+            connection = createServer();
+            try {
+                connection.startConnection();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            serverIp.setText("127.0.0.1");
+            serverIp.setVisible(true);
         }
     }
 
@@ -37,26 +45,42 @@ public class ChatController implements Initializable {
 //        connection.closeConnection();
     }
 
-    private Server createServer() {
-        return new Server(55555, data -> {
-            DataPacket packet = (DataPacket) data;
-            byte[] original = new Encryptor().dec(packet.getRawBytes());
+    private void onReceiveCallback(DataPacket packet) {
+        byte[] original = new Encryptor().dec(packet.getRawBytes());
 
-            Platform.runLater(() -> {
+        Platform.runLater(() -> {
+            if (connection.getSocket() == null) {
+                messages.appendText("Connection failed!\n");
+            } else if (connection.getSocket().isClosed()) {
+                messages.appendText("Connection closed!\n");
+            } else {
                 messages.appendText(new String(original) + "\n");
-            });
+            }
         });
     }
 
-    private Client createClient() {
-        return new Client(serverIp, 55555, data -> {
-            DataPacket packet = (DataPacket) data;
-            byte[] original = new Encryptor().dec(packet.getRawBytes());
+    private Server createServer() {
+        return new Server(55555, data -> onReceiveCallback((DataPacket) data));
+    }
 
-            Platform.runLater(() -> {
-                messages.appendText(new String(original) + "\n");
-            });
-        });
+    private Client createClient() {
+        return new Client(serverIp.getText(), 55555, data -> onReceiveCallback((DataPacket) data));
+    }
+
+    @FXML
+    protected void onServerIpSetOnAction(Event event) {
+        try {
+            if (connection != null && connection.getSocket() != null && !connection.getSocket().isClosed()) {
+                messages.appendText("Closing Connection with: " + connection.getIP() + "\n");
+                connection.closeConnection();
+            }
+
+            connection = createClient();
+            connection.startConnection();
+            messages.appendText("Connecting with: " + serverIp.getText() + "\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

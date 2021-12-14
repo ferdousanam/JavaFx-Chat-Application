@@ -30,9 +30,13 @@ public abstract class NetworkConnection {
 
     protected abstract boolean isServer();
 
-    protected abstract String getIP();
+    public abstract String getIP();
 
     protected abstract int getPort();
+
+    public Socket getSocket() {
+        return connThread.socket;
+    }
 
     private class ConnectionThread extends Thread {
         private Socket socket;
