@@ -5,11 +5,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 <VBox spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.ferdousanam.javafxchatapp.ChatController">
+      fx:controller="com.ferdousanam.javafxchatapp.ChatController" minHeight="600" minWidth="600">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
-    <TextArea fx:id="messages"/>
-    <TextField text="Hello!" onAction="#onHelloButtonClick"/>
+    <TextArea fx:id="messages" editable="false" prefHeight="550"/>
+    <TextField fx:id="input" onAction="#onInputSetOnAction" focusTraversable="false"/>
 </VBox>

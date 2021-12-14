@@ -7,4 +7,6 @@ module com.ferdousanam.javafxchatapp {
 
     opens com.ferdousanam.javafxchatapp to javafx.fxml;
     exports com.ferdousanam.javafxchatapp;
+    exports com.ferdousanam.javafxchatappwithoutfxml;
+    opens com.ferdousanam.javafxchatappwithoutfxml to javafx.fxml;
 }
