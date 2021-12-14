@@ -1,27 +1,24 @@
-package com.ferdousanam.javafxchatapp;
+package com.ferdousanam.classes;
 
 import java.io.Serializable;
 import java.util.function.Consumer;
 
-public class Client extends NetworkConnection {
-
-    private final String ip;
+public class Server extends NetworkConnection {
     private final int port;
 
-    public Client(String ip, int port, Consumer<Serializable> onReceiveCallback) {
+    public Server(int port, Consumer<Serializable> onReceiveCallback) {
         super(onReceiveCallback);
-        this.ip = ip;
         this.port = port;
     }
 
     @Override
     protected boolean isServer() {
-        return false;
+        return true;
     }
 
     @Override
     protected String getIP() {
-        return ip;
+        return null;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.ferdousanam.javafxchatapp;
 
+import com.ferdousanam.classes.*;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;

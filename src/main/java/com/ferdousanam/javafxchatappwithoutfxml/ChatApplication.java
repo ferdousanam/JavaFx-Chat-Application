@@ -1,6 +1,6 @@
 package com.ferdousanam.javafxchatappwithoutfxml;
 
-import com.ferdousanam.javafxchatapp.*;
+import com.ferdousanam.classes.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;

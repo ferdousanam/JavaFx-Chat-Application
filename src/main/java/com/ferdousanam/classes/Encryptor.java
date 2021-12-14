@@ -1,4 +1,4 @@
-package com.ferdousanam.javafxchatapp;
+package com.ferdousanam.classes;
 
 public class Encryptor {
     public byte[] enc(byte[] input) {

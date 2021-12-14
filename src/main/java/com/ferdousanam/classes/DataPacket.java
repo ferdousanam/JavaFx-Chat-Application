@@ -1,4 +1,4 @@
-package com.ferdousanam.javafxchatapp;
+package com.ferdousanam.classes;
 
 import java.io.Serializable;
 
