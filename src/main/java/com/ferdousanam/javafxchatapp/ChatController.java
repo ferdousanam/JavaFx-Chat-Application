@@ -12,7 +12,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ChatController implements Initializable {
-    public static final boolean isServer = false;
+    public static final boolean isServer = true;
+    public static final String serverIp = "127.0.0.1";
     private NetworkConnection connection;
 
     @FXML
@@ -48,7 +49,7 @@ public class ChatController implements Initializable {
     }
 
     private Client createClient() {
-        return new Client("127.0.0.1", 55555, data -> {
+        return new Client(serverIp, 55555, data -> {
             DataPacket packet = (DataPacket) data;
             byte[] original = new Encryptor().dec(packet.getRawBytes());
 
